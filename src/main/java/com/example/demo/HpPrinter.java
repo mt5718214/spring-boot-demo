@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -7,17 +8,16 @@ import javax.annotation.PostConstruct;
 @Component
 public class HpPrinter implements Printer {
 
-    private int count;
+    @Value("${printer.name}")
+    private String name;
 
-    @PostConstruct
-    public void init() {
-        count = 10;
-    }
+    @Value("${printer.count:20}") //冒號後的值為預設值
+    private int count;
 
     @Override
     public void print(String message) {
         count--;
-        System.out.println("Hp印表機" + message);
+        System.out.println(name + ": " + message);
         System.out.println("剩餘使用次數： " + count);
     }
 }
